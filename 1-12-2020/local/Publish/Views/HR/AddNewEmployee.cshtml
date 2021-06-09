@@ -1,0 +1,431 @@
+﻿
+@model EsselTestLocalApplication.Models.HR.EmployeeRegistration
+<style>
+    .disabledTab {
+        pointer-events: none;
+    }
+    .form-group .ui-datepicker-trigger {
+        position: absolute;
+        top: 5px !important;
+        right: 20px;
+       
+    }
+    /*.familymemberdob.button.ui-datepicker-trigger {
+        position: absolute;
+        top: -15px !important;
+        right: 120px;
+        background-color: red;
+    }*/
+</style>
+<div class="row" id="divMainData">
+    @*<div class="col-md-12">
+            <div class="col-md-1"></div>
+            <div class="col-md-2">@Html.LabelFor(model => model.Department)</div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.DropDownListFor(model => model.Department, new SelectList(Model.EmpDeptList, "DepartmentId", "DepartmentName"), "-Please Select-", htmlAttributes: new { @class = "form-control dropdown-toggle" })
+                </div>
+            </div>
+            <div class="col-md-5"></div>
+
+        </div>*@
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-2">@Html.LabelFor(model => model.JoiningCategory)</div>
+        <div class="col-md-4">
+            <div class="form-group">
+                @Html.DropDownListFor(model => model.JoiningCategory, new SelectList(Model.EmpJoiningCategoryList, "EJoiningCategory", "EJoiningCategory"), "-Please Select-", htmlAttributes: new { @class = "form-control dropdown-toggle", @id = "ddlNEmpjoinCategory" })
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-2">@Html.LabelFor(model => model.JoiningType)</div>
+        <div class="col-md-4">
+            <div class="form-group">
+                @Html.DropDownListFor(model => model.JoiningType, new SelectList(Model.EmpJoiningTypeList, "EJoiningType", "EJoiningType"), "-Please Select-", htmlAttributes: new { @class = "form-control dropdown-toggle", @id = "ddlNEmpjoinType", onchange = "NewEmpJoiningTypeChange()" })
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-2">@Html.LabelFor(model => model.Category)</div>
+        <div class="col-md-4">
+            <div class="form-group">
+                @Html.DropDownListFor(model => model.Category, new SelectList(Model.EmpCategoryList, "ECategory", "ECategory"), "-Please Select-", htmlAttributes: new { @class = "form-control dropdown-toggle", @id = "ddlNEmpCategory" })
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-2">@Html.LabelFor(model => model.Appointmenttype)</div>
+        <div class="col-md-4">
+            <div class="form-group">
+                @Html.DropDownListFor(model => model.Appointmenttype, new SelectList(Model.EmpAppointmenttypeList, "EAppointmenttype", "EAppointmenttype"), "-Please Select-", htmlAttributes: new { @class = "form-control dropdown-toggle", @id = "ddlNEmpAppointType" })
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+    <div class="row" id="divNewOldUser">
+        <div class="col-md-2"></div>
+        <div class="col-md-2">@Html.LabelFor(model => model.OldEmpUsername)</div>
+        <div class="col-md-4">
+            <div class="form-group">
+                @Html.DropDownListFor(model => model.OldEmpUsername, new SelectList(Model.EmpDataList, "EmpUserName", "EmpUserName"), "-Please Select-", htmlAttributes: new { @class = "form-control dropdown-toggle", @id = "ddlNEmpOldUser" })
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-2"></div>
+        <div class="col-md-4">
+            <button class="btn btn1 btn-success" id="btnewEmp" onclick="ShowAddNewEmp()">Submit</button>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+
+</div>
+<div class="row" id="divNewEmpTabData">
+    <div class="col-md-12"><hr /></div>
+    <div class="col-md-12">
+        <div class="col-md-2">@Html.LabelFor(model => model.FirstName)</div>
+        <div class="col-md-4">
+            <div class="form-group">
+                @Html.TextBoxFor(model => model.FirstName, htmlAttributes: new { @class = "form-control", @id = "txtNEmpfirstname" })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-2">@Html.LabelFor(model => model.LastName)</div>
+        <div class="col-md-4">
+            <div class="form-group">
+                @Html.TextBoxFor(model => model.LastName, htmlAttributes: new { @class = "form-control", @id = "txtNEmplastname" })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-2">@Html.LabelFor(model => model.MiddleName)</div>
+        <div class="col-md-4">
+            <div class="form-group">
+                @Html.TextBoxFor(model => model.MiddleName, htmlAttributes: new { @class = "form-control", @id = "txtNEmpmiddlename" })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-2">@Html.LabelFor(model => model.DateofBirth)</div>
+        <div class="col-md-4">
+            <div class="form-group">
+                @Html.TextBoxFor(model => model.DateofBirth, "{0:dd-MMM-yyyy}", htmlAttributes: new { @class = "form-control date-picker", @id = "txtNEmpDateofbirth" })
+            </div>
+        </div>
+        <div class="col-md-1 text-right" style="margin-top:12px">@Html.LabelFor(model => model.EmpAge)</div>
+        <div class="col-md-1 text-left">
+            @Html.TextBoxFor(model => model.EmpAge, htmlAttributes: new { @class = "form-control", @id = "txtNEmpAge" })
+
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-2">@Html.LabelFor(model => model.Sex)</div>
+        <div class="col-md-4">
+            <div class="form-group">
+                @Html.DropDownListFor(model => model.Sex, new SelectList(Model.EmpSexList, "ESex", "ESex"), "-Please Select-", htmlAttributes: new { @class = "form-control dropdown-toggle", @id = "ddlNEmpSex" })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-2">@Html.LabelFor(model => model.MartialStatus)</div>
+        <div class="col-md-4">
+            <div class="form-group">
+                @Html.DropDownListFor(model => model.MartialStatus, new SelectList(Model.EmpMaritalStatusList, "EMaritalStatus", "EMaritalStatus"), "-Please Select-", htmlAttributes: new { @class = "form-control dropdown-toggle", @id = "ddlNEmpMaritalStatus" })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-2">@Html.LabelFor(model => model.DateofMarriage)</div>
+        <div class="col-md-4">
+            <div class="form-group">
+                @Html.TextBoxFor(model => model.DateofMarriage, "{0:dd-MMM-yyyy}", htmlAttributes: new { @class = "form-control", @id = "txtNempDateofMarriage" })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12"><hr /></div>
+    <div class="col-md-12">
+        @*Tab data*@
+        <ul class="nav nav-tabs" id="tabGroups" role="tablist">
+            <li class="active disabledTab"><a data-toggle="tab" href="#PersonalInfo">Personal Info</a></li>
+            @*<li><a data-toggle="tab" href="#Qualification">Qualification Details</a></li>
+                <li><a data-toggle="tab" href="#EmploymentHistory">Employment History</a></li>
+                <li><a data-toggle="tab" href="#UploadDoc">Upload Documents</a></li>
+                <li><a data-toggle="tab" href="#JoiningDetails">Joining Details</a></li>*@
+            <li class="disabledTab"><a data-toggle="tab" href="#Qualification">Qualification Details</a></li>
+            <li class="disabledTab"><a data-toggle="tab" href="#EmploymentHistory">Employment History</a></li>
+            <li class="disabledTab"><a data-toggle="tab" href="#UploadDoc">Upload Documents</a></li>
+            <li class="disabledTab"><a data-toggle="tab" href="#JoiningDetails">Joining Details</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="PersonalInfo" class="tab-pane fade in active">
+                @*<input type="text" id="textpf" value="PersonalInfo" />*@
+                @*family data*@
+                <div id="divFamilyGrid" class="col-md-12">
+                    <div class="col-md-12 change-tab">
+                        <div class="strike">
+                            <span>Family Details</span>
+                        </div>
+                        <div class="tabledynamic">
+                            <br />
+                            <table id="FamilyTable" class="table order-list familytable">
+                                <thead>
+                                    <tr>
+                                        <td style="text-align:center;color:#fff !important">S.No</td>
+                                        <td style="text-align:center;color:#fff !important">Name</td>
+                                        <td style="text-align:center;color:#fff !important">Date of Birth</td>
+                                        <td style="text-align:center;color:#fff !important">Age</td>
+                                        <td style="text-align:center;color:#fff !important">Gender</td>
+                                        <td style="text-align:center;color:#fff !important">Relationship</td>
+                                        <td style="text-align:center;color:#fff !important">Work</td>
+                                        <td style="text-align:center;color:#fff !important">Mobile No</td>
+                                        <td style="text-align:center;color:#fff !important"></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align:center">1</td>
+                                        <td style="text-align:center">
+                                            <input type="text" class="form-control familymembername" style="text-transform:uppercase" />
+                                        </td>
+                                        <td>
+                                          
+                                                <input  class="form-control familymemberdob date-picker" />
+                                           
+                                        </td>
+
+                                        <td><input type="text" class="form-control familymemberage" disabled /></td>
+                                        <td>
+                                            <select class="form-control dropdown-toggle familymembergender">
+                                                <option selected="selected" value="Select">Select</option>
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="form-control dropdown-toggle familymemberrelation"></select>
+                                        </td>
+                                        <td><input type="text" class="form-control familymemberwork" /></td>
+                                        <td><input type="text" class="form-control familymembermobileno" /></td>
+                                        <td style="text-align:center"></td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            <input type="button" class="btn btn-default  btn-block" value="Add More" onclick="AddFamilymembergridnewrow();" />
+                                        </td>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-12"></div>
+                <div class="col-md-12"></div>
+                <div class="col-md-12"></div>
+                <div class="col-md-12 text-right"> <button class="btn btn1 btn-success" id="btnewPINext" onclick="ShowQualificationTab()">Next</button></div>
+
+            </div>
+            <div id="Qualification" class="tab-pane fade">
+                <div class="col-md-12"></div>
+                <div class="col-md-12"></div>
+                <div class="col-md-12"></div>
+                <div class="col-md-12"></div>
+                <div class="col-md-12 text-right">
+                    <input type="text" id="textq" value="Qualification" />
+                    <button class="btn btn1 btn-success" id="btnewQualificationBack" onclick="ShowPITab()">Back</button>
+                    <button class="btn btn1 btn-success" id="btnewQualificationNext" onclick="ShowHistoryTab()">Next</button>
+                </div>
+            </div>
+            <div id="EmploymentHistory" class="tab-pane fade">
+                <div class="col-md-12"></div>
+                <div class="col-md-12"></div>
+                <div class="col-md-12"></div>
+                <div class="col-md-12"></div>
+                <div class="col-md-12 text-right">
+                    <input type="text" id="textHistory" value="EmploymentHistory" />
+                    <button class="btn btn1 btn-success" id="btnewEmpHistoryBack" onclick="ShowQualificationTab()">Back</button>
+                    <button class="btn btn1 btn-success" id="btnewEmpHistoryNext" onclick="ShowUplDocTab()">Next</button>
+                </div>
+            </div>
+            <div id="UploadDoc" class="tab-pane fade">
+                <div class="col-md-12"></div>
+                <div class="col-md-12"></div>
+                <div class="col-md-12"></div>
+                <div class="col-md-12"></div>
+                <div class="col-md-12 text-right">
+                    <input type="text" id="textUD" value="UploadDoc" />
+                    <button class="btn btn1 btn-success" id="btnewEmpUpDocBack" onclick="ShowHistoryTab()">Back</button>
+                    <button class="btn btn1 btn-success" id="btnewEmpUpDocNext" onclick="ShowJoiningDataTab()">Next</button>
+                </div>
+            </div>
+            <div id="JoiningDetails" class="tab-pane fade">
+                <div class="col-md-12"></div>
+                <div class="col-md-12"></div>
+                <div class="col-md-12"></div>
+                <div class="col-md-12"></div>
+                <div class="col-md-12 text-right">
+                    <input type="text" id="textJD" value="JoiningDetails" />
+                    <button class="btn btn1 btn-success" id="btnewEmpJoiningDataBack" onclick="ShowUplDocTab()">Back</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#divNewEmpTabData").addClass("hidden");
+                $("#divMainData").removeClass("hidden");
+                $("#divNewOldUser").addClass("hidden");
+                $('.nav-tabs li:eq(0) a').tab('show');
+                //$('.nav-tabs li:eq(1) a').addClass('disabledTab');
+                //$('.nav-tabs li:eq(2) a').addClass('disabledTab');
+                //$('.nav-tabs li:eq(3) a').addClass('disabledTab');
+                //$('.nav-tabs li:eq(4) a').addClass('disabledTab');
+                //$('.nav-tabs li:eq(5) a').addClass('disabledTab');
+
+                $("#txtNEmpDateofbirth").datepicker({
+                    dateFormat: 'dd-M-yy',
+                    changeMonth: true,
+                    changeYear: true,
+                    showOn: "button",
+                    buttonText: "<i class ='glyphicon glyphicon-calendar'></i>",
+                    maxDate: 'dateToday',
+                    yearRange: "-100:+0",
+                    onClose: function (selectedDate) {
+                        empagecal();
+                    }
+                }).datepicker("setDate", new Date());
+                $("#txtNempDateofMarriage").datepicker({
+                    dateFormat: 'dd-M-yy',
+                    changeMonth: true,
+                    changeYear: true,
+                    showOn: "button",
+                    buttonText: "<i class ='glyphicon glyphicon-calendar'></i>",
+                    maxDate: 'dateToday',
+                    yearRange: "-100:+0",
+                }).datepicker("setDate", new Date());
+                ///start of family member info grid events//
+                $('#FamilyTable').on('change', '.familymembergender', function () {
+                    var genderindex = $(this).find("option:selected").index();
+                    var gender = $(this).find("option:selected").val();
+                    var row = $(this).closest('tr'); // get the row
+                    var ddlrelation = row.find('.familymemberrelation'); // get the other select in the same row
+                    if (genderindex != 0) {
+                        ddlrelation.empty().append(' <option selected="selected" value="Select">Select</option>');
+                        if (gender === 'Male') {
+                            ddlrelation.append($("<option></option>").val('Father').html('Father'));
+                            ddlrelation.append($("<option></option>").val('Husband').html('Husband'));
+                            ddlrelation.append($("<option></option>").val('Husband').html('Brother'));
+                        }
+                        else if (gender === 'Female') {
+                            ddlrelation.append($("<option></option>").val('Mother').html('Mother'));
+                            ddlrelation.append($("<option></option>").val('Wife').html('Wife'));
+                            ddlrelation.append($("<option></option>").val('Wife').html('Sister'));
+                        }
+
+                    }
+                    else {
+                        var ddlr = $("#ddlRelation");
+                        ddlr.empty().append(' <option selected="selected" value="Select">Select</option>');
+                    }
+                });
+                $(document).on("click", ".familymemberdob", function () {
+
+                    $(this).datepicker({
+                        changeMonth: true,
+                        changeYear: true,
+                        dateFormat: 'yy-mm-dd'
+                    }).datepicker("show");
+                });
+
+                //$(".familymemberdob").datepicker({
+                //    dateFormat: 'dd-M-yy',
+                //    changeMonth: true,
+                //    changeYear: true,
+                //    showOn: "button",
+                //    buttonText: "<i class ='glyphicon glyphicon-calendar'></i>",
+                //    maxDate: 'dateToday',
+                //    yearRange: "-100:+0",
+                //    orientation: "bottom left" 
+                //}).datepicker("setDate", new Date());
+                $('#FamilyTable').on('change', '.familymemberdob', function () {
+                    var fmemberdob = $(this).val();
+                    var row = $(this).closest('tr'); // get the row
+                    var fmemeberage = row.find('.familymemberage');
+                    var From_date = new Date(fmemberdob);
+                    var To_date = new Date();
+                    var diff_date = To_date - From_date;
+                    var years = Math.floor(diff_date / 31536000000);
+                    fmemeberage.val(years);
+                });
+                ///end of family member info grid events//
+            });
+            function ShowAddNewEmp() {
+                $("#divNewEmpTabData").removeClass("hidden");
+            }
+            function ShowPITab() {
+                $('.nav-tabs li:eq(0) a').tab('show');
+            }
+            function ShowQualificationTab() {
+                $('.nav-tabs li:eq(1) a').tab('show');
+            }
+            function ShowHistoryTab() {
+                $('.nav-tabs li:eq(2) a').tab('show');
+            }
+            function ShowUplDocTab() {
+                $('.nav-tabs li:eq(3) a').tab('show');
+            }
+            function ShowJoiningDataTab() {
+                $('.nav-tabs li:eq(4) a').tab('show');
+            }
+            function NewEmpJoiningTypeChange() {
+                let jtypeindex = $("#ddlNEmpjoinType select:option").index();
+                let jtype = $("#ddlNEmpjoinType option:selected").val();
+                if (jtypeindex === 0) {
+                    $("#divNewOldUser").addClass("hidden");
+                }
+                else if (jtype === "New") {
+                    $("#divNewOldUser").addClass("hidden");
+                } else { $("#divNewOldUser").removeClass("hidden"); }
+            }
+            function empagecal() {
+                if ($("#txtNEmpDateofbirth").val() != "") {
+                    var From_date = new Date($("#txtNEmpDateofbirth").val());
+                    var To_date = new Date();
+                    var diff_date = To_date - From_date;
+                    var years = Math.floor(diff_date / 31536000000);
+                    $("#txtNEmpAge").val(years);
+                }
+                else {
+                    //alert("Select Date of Birth");
+                    $("#txtNEmpAge").val("");
+                    return false;
+                }
+            }
+            ///start of family member info grid//
+            function AddFamilymembergridnewrow() {
+
+
+            }
+             ///end of family member info grid//
+        </script>

@@ -1,0 +1,316 @@
+﻿@model EsselTestLocalApplication.Models.AddCostCenter
+@{
+    ViewBag.Title = "AddCostCenter";
+}
+<style>
+    .spancls {
+        color: red;
+        font-size: 12px;
+    }
+</style>
+<div class="col-md-12">
+    <form onsubmit="return false">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CCType)
+                        @Html.DropDownListFor(model => model.CCType, new SelectList(Model.CCTypesList, "CCTypeID", "CCTypeDescription"), "-Please Select-", htmlAttributes: new { @class = "form-control dropdown-toggle", @id = "CCTypeddlID", onchange = "NewCCTypeChange()" })
+                    </div>
+                </div>
+                <div class="col-md-6" id="divNPCCType">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.NPCCOfficeType)
+                        @Html.DropDownListFor(model => model.NPCCOfficeType, new SelectList(Model.NPCCTypesList, "NPCCTypeID", "CCTypeName"), "-Please Select-", htmlAttributes: new { @class = "form-control dropdown-toggle", @id = "NPCCType" })
+                    </div>
+                </div>
+                <div class="col-md-6" id="divNewCCSubType">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.SubType)
+                        @Html.DropDownListFor(model => model.SubType, new SelectList(Model.SubTypesList, "CC_SubType", "CC_SubType"), "-Please Select-", htmlAttributes: new { @class = "form-control dropdown-toggle", @id = "SubTypeddlID" })
+                    </div>
+                </div>
+            </div>
+            <div id="divNewCCDetails">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CCCode)&nbsp;&nbsp;
+                            <label id="lblccExist" class="spancls"></label>
+
+                            @Html.TextBoxFor(model => model.CCCode, htmlAttributes: new { @class = "form-control", @id = "txtNewCCCode", onkeyup = "NewCCCodeChange(this)", onkeypress = "return IsNumericCC(event)" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CCName)
+                            @Html.TextBoxFor(model => model.CCName, htmlAttributes: new { @class = "form-control", @id = "txtCCNameid" })
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6" id="divNewCCFinalOfferNo">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.EPPLFinalOfferNo)
+                            @Html.TextBoxFor(model => model.EPPLFinalOfferNo, htmlAttributes: new { @class = "form-control", @id = "txtEPPLFinalOfferNoid" })
+                        </div>
+                    </div>
+                    <div class="col-md-6" id="divNewCCFinalOfferDate">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FinalOfferDate)
+                            @Html.TextBoxFor(model => model.FinalOfferDate, "{0:dd-MMM-yyyy}", new { @id = "txtFinalOfferDateid", @class = "form-control date-picker", type = "text", @readonly = true })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6" id="divNewCCRefNo">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ClientAcceptanceReferenceNo)
+                            @Html.TextBoxFor(model => model.ClientAcceptanceReferenceNo, htmlAttributes: new { @class = "form-control", @id = "txtClientAcceptanceReferenceNoid" })
+
+                        </div>
+                    </div>
+                    <div class="col-md-6" id="divNewCCRefDate">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ClientAcceptanceDate)
+                            @Html.TextBoxFor(model => model.ClientAcceptanceDate, "{0:dd-MMM-yyyy}", htmlAttributes: new { @class = "form-control  date-picker", @id = "txtClientAcceptanceDateid", @type = "text", @readonly = true })
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CCInchargeName)
+                            @Html.TextBoxFor(model => model.CCInchargeName, htmlAttributes: new { @class = "form-control", @id = "txtCCInchargeNameid" })
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.State)
+                            @Html.DropDownListFor(model => model.State, new SelectList(Model.StatesList, "State_ID", "State_Name"), "-Please Select-", htmlAttributes: new { @class = "form-control col-md-3 dropdown-toggle", @id = "txtStateNameid" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.InchargePhNo)
+                            @Html.TextBoxFor(model => model.InchargePhNo, htmlAttributes: new { @class = "form-control", @id = "txtInchargePhNoid", onkeypress = "return IsNumeric(event)" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.SiteAddress)
+                            @Html.TextBoxFor(model => model.SiteAddress, htmlAttributes: new { @class = "form-control", @id = "txtSiteAddressid" })
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.PhoneNo)
+                            @Html.TextBoxFor(model => model.PhoneNo, htmlAttributes: new { @class = "form-control", @id = "txtPhoneNoid", onkeypress = "return IsNumeric(event)" })
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.VoucherLimit)
+                            @Html.TextBoxFor(model => model.VoucherLimit, htmlAttributes: new { @class = "form-control", @id = "txtVoucherLimitid", onkeypress = "return ValidateAmount(this,event);" })
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.DayLimit)
+                            @Html.TextBoxFor(model => model.DayLimit, htmlAttributes: new { @class = "form-control", @id = "txtDayLimitid", onkeypress = "return ValidateAmount(this,event);" })
+
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="col-md-6" id="divccProjmgr">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ProjectMgr)
+                            @Html.DropDownListFor(model => model.ProjectMgr, new SelectList(Model.Projectmgrlist, "Userid", "Username"), "-Please Select-", htmlAttributes: new { @class = "form-control col-md-3 dropdown-toggle", @id = "ddlCCProjmgr" })
+                        </div>
+                    </div>
+                    <div class="col-md-6" id="divNpCCStore">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.StoreType)
+                            @Html.DropDownListFor(model => model.StoreType, new SelectList(Model.NPStoreTypesList, "Value", "TypeName"), "-Please Select-", htmlAttributes: new { @class = "form-control col-md-3 dropdown-toggle", @id = "ddlNpCCStore" })
+                        </div>
+                    </div>
+
+                    @if (Model.isRegionExist == true)
+                    {
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.GroupID)
+                                @Html.DropDownListFor(model => model.GroupID, new SelectList(Model.GroupsList, "GroupID", "GroupName"), "-Please Select-", htmlAttributes: new { @class = "form-control  dropdown-toggle", @id = "groupDDlid" })
+
+                            </div>
+                        </div>
+                    }
+
+                </div>
+                <div class="row">
+                    <div class="col-md-6" id="divpCCStore">
+                        <div class="form-group">
+
+                            @Html.LabelFor(model => model.IsStoreApplicable)
+                            <ul class="list-inline">
+                                <li class="eagle-checkbox">
+                                    <label class="eagle-check custom-checkbox">
+                                        <input type="checkbox" class="eagle-check-input" name="StoreApplicable" value="Yes" id="chkStoreY" onclick="StoleApplicableValidation(this)">
+                                        <span class="eagle-check-indicator"></span>
+                                        <span class="eagle-check-description">Yes</span>
+                                    </label>
+                                </li>
+                                <li class="eagle-checkbox">
+                                    <label class="eagle-check custom-checkbox">
+                                        <input type="checkbox" class="eagle-check-input" name="StoreApplicable" value="No" id="chkStoreN" onclick="StoleApplicableValidation(this)" checked>
+                                        <span class="eagle-check-indicator"></span>
+                                        <span class="eagle-check-description">No</span>
+                                    </label>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="text-right">
+                            <input type="submit" value="Submit" class="btn btn1 btn-success" onclick="AddCostCenter()" />
+                            <input type="reset" value="Reset" class="btn btn1 btn-success" onclick="ResetAddNewCC()" />
+                            <input type="text" id="txtCreatedby" style="display:none" />
+                            <input type="text" id="txtCCuid" style="display:none" />
+                            @if (Model.isRegionExist == true)
+                            {
+                                <input type="hidden" id="txtRegionExist" value="Yes" />
+                            }
+                            else
+                            {
+                                <input type="hidden" id="txtRegionExist" value="No" />
+                            }
+
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <br />
+                        <div class="text-center">
+                            <div id="divAddCostCenterInfoMsg" class="alert alert-danger hidden">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var Sessioncreated = '@Session["Createdby"]';
+        $("#txtCreatedby").val(Sessioncreated);
+        var SessionUID = '@Session["UID"]';
+        $("#txtCCuid").val(SessionUID);
+        //alert($("#txtCreatedby").val());
+        $('#txtClientAcceptanceDateid').css('background-color', 'transparent');
+        $('#txtFinalOfferDateid').css('background-color', 'transparent');
+        $("#divNewCCDetails").addClass('hidden');
+        $("#divNewCCSubType").addClass('hidden');
+        $("#divNewCCFinalOfferNo").addClass('hidden');
+        $("#divNewCCFinalOfferDate").addClass('hidden');
+        $("#divNewCCRefNo").addClass('hidden');
+        $("#divNewCCRefDate").addClass('hidden');
+        $("#divpCCStore").addClass('hidden');
+        $("#divNpCCStore").addClass('hidden');
+        // Intialising Int fields to show Empty
+        $("#VoucherLimit").val("");
+        $("#DayLimit").val("");
+        //Cost center
+        $("#txtFinalOfferDateid").datepicker({
+            dateFormat: 'dd-M-yy',
+            changeMonth: true,
+            changeYear: true,
+            showOn: "button",
+            buttonText: "<i class ='glyphicon glyphicon-calendar'></i>",
+            maxDate: 'dateToday'
+        }).datepicker("setDate", new Date());
+        $("#txtClientAcceptanceDateid").datepicker({
+            dateFormat: 'dd-M-yy',
+            changeMonth: true,
+            changeYear: true,
+            showOn: "button",
+            buttonText: "<i class ='glyphicon glyphicon-calendar'></i>",
+            maxDate: 'dateToday'
+        }).datepicker("setDate", new Date());
+
+    });
+    function ResetAddNewCC() {
+        $("#lblccExist").text("");
+
+        $("#txtEPPLFinalOfferNoid").val("");
+        //var FinalOfferDate = $("#txtFinalOfferDateid").val();
+        var ClientAcceptanceReferenceNo = $("#txtClientAcceptanceReferenceNoid").val("");
+        //var ClientAcceptanceDate = $("#txtClientAcceptanceDateid").val();
+
+        $("#txtCCNameid").val("");
+        $("#txtCCInchargeNameid").val("");
+        $("#txtInchargePhNoid").val("");
+        $("#txtSiteAddressid").val("");
+        $("#txtPhoneNoid").val("");
+        $("#txtVoucherLimitid").val("");
+        $("#txtDayLimitid").val("");
+        //$("#txtStateNameid option:selected").index();
+        $("#txtNewCCCode").val("");
+        $("#SubTypeddlID").prop('selectedIndex', 0);
+        $("#txtStateNameid").prop('selectedIndex', 0);
+        $("#CCTypeddlID").prop('selectedIndex', 0);
+        $("#CCTypeddlID").prop('disabled', false);
+        // $(".date-picker").datepicker("setDate", 'dateToday');
+        $("#txtClientAcceptanceDateid").datepicker("setDate", 'dateToday');
+        $("#txtFinalOfferDateid").datepicker("setDate", 'dateToday');
+        //$('#txtClientAcceptanceDateid').datepicker('setDate', null);
+        //$("#txtFinalOfferDateid").datepicker({ }).datepicker("setDate", new Date());
+
+        $("#divAddCostCenterInfoMsg").text("");
+        $("#divAddCostCenterInfoMsg").addClass("hidden");
+        $("#divNewCCSubType").addClass("hidden");
+        $("#divNewCCDetails").addClass("hidden");
+        $("#divNPCCType").addClass("hidden");
+        ViewAddCostCenterModel1();
+        $("#divpCCStore").addClass('hidden');
+        $("#divNpCCStore").addClass('hidden');
+    }
+    function ViewAddCostCenterModel1() {
+        $.get("/Home/AddCostCenter", null, function (data) {
+            $('#AddCostCenter').html(data);
+            $("#AddNewCCModal").modal('show');
+            $("#divNPCCType").addClass('hidden');
+        });
+    }
+    function StoleApplicableValidation(checkbox) {
+        var selectedIds = [];
+        var checkboxes = document.getElementsByName('StoreApplicable');
+        for (var i in checkboxes)
+            checkboxes[i].checked = checkbox.checked;
+        checkboxes.forEach((item) => {
+            if (item !== checkbox) item.checked = false;
+        });
+        var ids = document.getElementsByName('StoreApplicable');
+      
+    }
+</script>
+
